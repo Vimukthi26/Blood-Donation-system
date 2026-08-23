@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8083
 
 spring:
   application:
@@ -14,7 +14,7 @@ api:
 
 # Base URL of the Donor Service, used to fetch donors when running the matching engine
 donor-service:
-  url: ${DONOR_SERVICE_URL:http://localhost:8082}
+  url: ${DONOR_SERVICE_URL:http://localhost:8081}
 
 springdoc:
   api-docs:

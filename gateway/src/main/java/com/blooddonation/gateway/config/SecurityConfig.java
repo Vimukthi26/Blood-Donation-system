@@ -41,7 +41,8 @@ public class SecurityConfig {
                     "/actuator/**"
                 ).permitAll()
                 .anyRequest().authenticated()
-            );
+            )
+            .addFilterBefore(new JwtAuthFilter(new com.blooddonation.gateway.service.JwtService()), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

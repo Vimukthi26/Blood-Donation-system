@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: gateway-service
+  data:
+    mongodb:
+      uri: ${MONGO_URI:mongodb://localhost:27017/auth_db}
 
 # JWT OAuth 2.0 Configuration
 jwt:
@@ -25,3 +28,31 @@ gateway:
     api-key-secret: blood_donation_secret_key_2026
   rate-limit:
     requests-per-minute: 60
+
+  cloud:
+    gateway:
+      routes:
+        - id: donor-service
+          uri: ${DONOR_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/donors/**
+          filters:
+            - AddRequestHeader=X-API-KEY, ${gateway.security.api-key-secret}
+        - id: inventory-service
+          uri: ${INVENTORY_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/inventory/**
+          filters:
+            - AddRequestHeader=X-API-KEY, ${gateway.security.api-key-secret}
+        - id: request-service
+          uri: ${REQUEST_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/requests/**
+          filters:
+            - AddRequestHeader=X-API-KEY, ${gateway.security.api-key-secret}
+        - id: notification-service
+          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/notify/**
+          filters:
+            - AddRequestHeader=X-API-KEY, ${gateway.security.api-key-secret}
