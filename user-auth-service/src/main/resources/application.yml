@@ -1,0 +1,16 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: user-auth-service
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/blood_bank_db?currentSchema=auth_schema}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: auth_schema
